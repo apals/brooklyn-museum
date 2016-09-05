@@ -24,7 +24,7 @@ public class BrooklynMuseumApplication extends Application {
         Realm.setDefaultConfiguration(config);
 
         dataManagerComponent = DaggerDataManagerComponent.builder()
-                .applicationModule(new ApplicationModule(getApplicationContext()))
+                .applicationModule(new ApplicationModule(this))
                 .build();
     }
 

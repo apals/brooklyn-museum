@@ -10,8 +10,9 @@ import se.apals.brooklynmuseum.utils.FragmentScoped;
  */
 @FragmentScoped
 @Component(dependencies = DataManagerComponent.class,
-        modules = ImagesModule.class)
+        modules = {ImagesModule.class})
 public interface ImagesComponent {
 
     void inject(MainActivity activity);
+
 }

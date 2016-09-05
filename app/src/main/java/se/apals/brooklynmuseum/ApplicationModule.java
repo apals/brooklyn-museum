@@ -1,5 +1,6 @@
 package se.apals.brooklynmuseum;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -17,9 +18,11 @@ import io.realm.Realm;
 public final class ApplicationModule {
 
     private final Context mContext;
+    private final Application application;
 
-    ApplicationModule(Context context) {
-        mContext = context;
+    ApplicationModule(Application application) {
+        this.application = application;
+        mContext = application.getApplicationContext();
     }
 
     @Provides
@@ -28,14 +31,14 @@ public final class ApplicationModule {
     }
 
     @Provides
+    Application provideApplication() {
+        return application;
+    }
+
+    @Provides
     @Singleton
     Realm provideRealm() {
         return Realm.getDefaultInstance();
     }
 
-    @Provides
-    @Singleton
-    SharedPreferences provideSharedpreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
-    }
 }

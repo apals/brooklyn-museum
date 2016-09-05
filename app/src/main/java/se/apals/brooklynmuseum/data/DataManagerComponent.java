@@ -1,5 +1,7 @@
 package se.apals.brooklynmuseum.data;
 
+import android.content.SharedPreferences;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -13,5 +15,6 @@ import se.apals.brooklynmuseum.ApplicationModule;
 public interface DataManagerComponent {
 
     DataManager getDataManager();
+    SharedPreferences getSharedPreferences();
 
 }

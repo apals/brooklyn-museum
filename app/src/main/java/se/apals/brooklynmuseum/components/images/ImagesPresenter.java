@@ -1,5 +1,6 @@
 package se.apals.brooklynmuseum.components.images;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -24,19 +25,21 @@ public class ImagesPresenter implements ImagesContract.Presenter {
 
     private ImagesContract.View imageView;
     private DataSource dataSource;
+    private SharedPreferences preferences;
 
     @Inject
-    public ImagesPresenter(@NonNull ImagesContract.View view, DataManager dataManager) {
+    public ImagesPresenter(@NonNull ImagesContract.View view, DataManager dataManager, SharedPreferences preferences) {
         Log.d(TAG, "just created a presenter");
         this.imageView = view;
         this.dataSource = dataManager;
+        this.preferences = preferences;
     }
 
     @Override
     public void start() {
         loadImages();
         new FetchObjectsTask(
-                PreferenceManager.getDefaultSharedPreferences(((Fragment) this.imageView).getContext()),
+                preferences,
                 dataSource)
                 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }

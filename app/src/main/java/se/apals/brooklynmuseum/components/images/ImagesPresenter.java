@@ -2,9 +2,7 @@ package se.apals.brooklynmuseum.components.images;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import java.util.List;

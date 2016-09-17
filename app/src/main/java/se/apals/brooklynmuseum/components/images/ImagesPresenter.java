@@ -45,7 +45,6 @@ public class ImagesPresenter implements ImagesContract.Presenter {
     @Override
     public void loadImages() {
         Log.d(TAG, "Loading images");
-
         dataSource.getImages().subscribe(this::onImagesLoaded);
     }
 

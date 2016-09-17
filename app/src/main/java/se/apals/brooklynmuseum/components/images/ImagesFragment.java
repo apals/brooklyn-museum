@@ -1,9 +1,12 @@
 package se.apals.brooklynmuseum.components.images;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import se.apals.brooklynmuseum.R;
+import se.apals.brooklynmuseum.databinding.FragmentImagesBinding;
 import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
 
 /**
@@ -23,16 +27,25 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
     private static final String TAG = ImagesFragment.class.getSimpleName();
 
     private ImagesContract.Presenter presenter;
+    private ImagesAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapter = new ImagesAdapter(getContext());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_images, container, false);
+        FragmentImagesBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_images, container, false);
+        RecyclerView recyclerView = binding.imagesRecyclerview;
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        return binding.getRoot();
     }
 
     @Override
@@ -44,12 +57,11 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
     @Override
     public void setImages(List<BrooklynMuseumImage> images) {
         Log.d(TAG, "Setting images: " + images.size());
-
-        TextView tv = ((TextView) getView().findViewById(R.id.textview_images));
-        tv.setText("");
-        for (BrooklynMuseumImage i : images) {
-            tv.setText(tv.getText() + "\n" + i.getTitle());
+        adapter.setDataSet(images);
+        for (BrooklynMuseumImage img : images) {
+            Log.d(TAG, ": " + img.getPrimaryImage());
         }
+
     }
 
     @Override

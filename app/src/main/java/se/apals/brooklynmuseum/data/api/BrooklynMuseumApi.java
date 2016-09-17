@@ -24,38 +24,41 @@ import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
 
 public final class BrooklynMuseumApi {
 
-    public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/";
-    public static final String OBJECT = "object";
+    public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/archive/image/";
+    public static final String OBJECT = "archive/image/";
     private static final String TAG = BrooklynMuseumApi.class.getSimpleName();
 
-    public static void fetchObjects(DataSource dataSource, SharedPreferences preferences) {
-        fetch(dataSource, OBJECT, preferences, BrooklynMuseumImage.class);
+    private static BrooklynMuseumApi sInstance;
+
+    public static BrooklynMuseumApi getInstance() {
+        if (sInstance == null) {
+            sInstance = new BrooklynMuseumApi();
+        }
+        return sInstance;
     }
 
-    private static void fetch(DataSource dataSource, @ApiCalls String endPoint, SharedPreferences prefs, Class<? extends RealmObject> clazz) {
+    public JSONObject fetchObjects(DataSource dataSource, SharedPreferences preferences) {
+        return fetch(dataSource, OBJECT, preferences, BrooklynMuseumImage.class);
+    }
+
+    private JSONObject fetch(DataSource dataSource, @ApiCalls String endPoint, SharedPreferences prefs, Class<? extends RealmObject> clazz) {
         String response = HTTPUtils.get(getUrl(endPoint), prefs, endPoint);
         try {
-            // Put the results in the database in the database
-            persistProperty(dataSource, response, clazz, endPoint);
-            Log.d(TAG, endPoint + " stored in database!");
+            return new JSONObject(response);
         } catch (JSONException e) {
-            Log.e(TAG, "doInBackground: ", e);
-            // Something went wrong when inserting, make sure the etag is cleared!
-            // Note: commit since we are on a background thread
-            prefs.edit().putString(endPoint, "").commit();
+            return null;
         }
     }
 
-    /*
-        Build the entire request URL for a specific @ApiCall
+    /**
+     * Build the entire request URL for a specific @ApiCall
+     * @param path path to the api
+     * @return The request URl object
      */
     private static URL getUrl(@ApiCalls String path) {
         URL url = null;
         try {
-            url = new URL((Uri.parse(BASE_PATH)
-                    .buildUpon()
-                    .appendPath(path)
-                    .build()).toString());
+            url = new URL(BASE_PATH);
         } catch (MalformedURLException e) {
             Log.e(TAG, "getUrl: ", e);
         }
@@ -63,22 +66,12 @@ public final class BrooklynMuseumApi {
         return url;
     }
 
-    private static void persistProperty(DataSource dataSource, String jsonString, final Class<? extends RealmObject> clazz, @ApiCalls String endpoint) throws JSONException {
-        if (jsonString == null || jsonString.isEmpty()) {
-            return;
-        }
+    public void persistProperty(DataSource dataSource, JSONObject json, final Class<? extends RealmObject> clazz, @ApiCalls String endpoint) throws JSONException {
+        if (json == null) return;
 
         if (endpoint.equals(OBJECT)) {
-            JSONObject j = new JSONObject(jsonString);
-            JSONArray a = new JSONArray();
-            dataSource.insertFromJSONSync(j.get("data").toString(), endpoint, clazz);
-
+            dataSource.insertFromJSONSync(json.get("data").toString(), endpoint, clazz);
         }
-
-//        // Get the JSON array
-//        JSONObject wrapper = new JSONObject(jsonString);
-//        final String json = wrapper.getString(endpoint);
-//        dataSource.insertFromJSONSync(json, endpoint, clazz);
     }
 
     @StringDef({OBJECT})

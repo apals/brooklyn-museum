@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import se.apals.brooklynmuseum.components.images.DaggerImagesComponent;
+import se.apals.brooklynmuseum.components.images.master.DaggerImagesComponent;
 import se.apals.brooklynmuseum.components.images.master.ImagesFragment;
 import se.apals.brooklynmuseum.components.images.master.ImagesModule;
 import se.apals.brooklynmuseum.components.images.master.ImagesPresenter;

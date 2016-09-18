@@ -27,10 +27,12 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     private static final String TAG = ImagesAdapter.class.getSimpleName();
     private final Context mContext;
+    private final ImagesFragment.ImageClickListener mImageClickListener;
     private List<ArchiveImage> mDataSet = new ArrayList<>();
 
-    public ImagesAdapter(Context context) {
+    public ImagesAdapter(Context context, ImagesFragment.ImageClickListener imageClickListener) {
         mContext = context;
+        mImageClickListener = imageClickListener;
     }
 
     public void setDataSet(List<ArchiveImage> dataSet) {
@@ -46,7 +48,10 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ArchiveImage image = mDataSet.get(position);
+        final ArchiveImage image = mDataSet.get(position);
+        holder.rootView.setOnClickListener(view -> {
+            mImageClickListener.onImageClick(image);
+        });
         holder.title.setText(image.getTitle());
         Log.d(TAG, "Loading image with url: " + image.getStandard_size_url());
         Glide.with(mContext)
@@ -76,11 +81,13 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        View rootView;
         ImageView imageView;
         TextView title;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
             imageView = (ImageView) itemView.findViewById(R.id.image);
             title = (TextView) itemView.findViewById(R.id.title);
         }

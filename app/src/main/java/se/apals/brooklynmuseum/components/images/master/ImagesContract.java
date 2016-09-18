@@ -14,16 +14,16 @@ public class ImagesContract {
     public interface View extends BaseView<Presenter> {
 
         void setImages(List<ArchiveImage> images);
+        void showImageDetailView(ArchiveImage image);
 
     }
 
     public interface Presenter extends BasePresenter.Master {
 
         void start();
-
         void loadImages();
-
         void onImagesLoaded(List<ArchiveImage> images);
+        void onImageClicked(ArchiveImage image);
 
     }
 }

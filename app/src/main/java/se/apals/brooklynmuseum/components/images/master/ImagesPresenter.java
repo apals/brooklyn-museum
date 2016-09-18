@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import se.apals.brooklynmuseum.components.images.detail.ImageDetailActivity;
 import se.apals.brooklynmuseum.data.DataManager;
 import se.apals.brooklynmuseum.data.DataSource;
 import se.apals.brooklynmuseum.data.api.FetchImagesTask;
@@ -56,6 +57,11 @@ public class ImagesPresenter implements ImagesContract.Presenter {
         }
 
         imageView.setImages(images);
+    }
+
+    @Override
+    public void onImageClicked(ArchiveImage image) {
+        imageView.showImageDetailView(image);
     }
 
     @Inject

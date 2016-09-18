@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import se.apals.brooklynmuseum.R;
+import se.apals.brooklynmuseum.components.images.detail.ImageDetailActivity;
 import se.apals.brooklynmuseum.databinding.FragmentImagesBinding;
 import se.apals.brooklynmuseum.models.ArchiveImage;
 
@@ -27,11 +28,18 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
 
     private ImagesContract.Presenter presenter;
     private ImagesAdapter adapter;
+    private ImageClickListener mOnImageClickListener = new ImageClickListener() {
+        @Override
+        public void onImageClick(ArchiveImage image) {
+            presenter.onImageClicked(image);
+        }
+    };
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ImagesAdapter(getContext());
+        adapter = new ImagesAdapter(getContext(), mOnImageClickListener);
     }
 
     @Nullable
@@ -55,12 +63,22 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
 
     @Override
     public void setImages(List<ArchiveImage> images) {
-        Log.d(TAG, "Setting images: " + images.size());
         adapter.setDataSet(images);
+    }
+
+    @Override
+    public void showImageDetailView(ArchiveImage image) {
+        ImageDetailActivity.start(getContext());
     }
 
     @Override
     public void setPresenter(@NonNull ImagesContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    interface ImageClickListener {
+
+        void onImageClick(ArchiveImage image);
+
     }
 }

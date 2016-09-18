@@ -4,7 +4,7 @@ import java.util.List;
 
 import se.apals.brooklynmuseum.BasePresenter;
 import se.apals.brooklynmuseum.BaseView;
-import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
+import se.apals.brooklynmuseum.models.ArchiveImage;
 
 /**
  * Created by apals on 04/09/16.
@@ -13,7 +13,7 @@ public class ImagesContract {
 
     public interface View extends BaseView<Presenter> {
 
-        void setImages(List<BrooklynMuseumImage> images);
+        void setImages(List<ArchiveImage> images);
 
     }
 
@@ -23,7 +23,7 @@ public class ImagesContract {
 
         void loadImages();
 
-        void onImagesLoaded(List<BrooklynMuseumImage> images);
+        void onImagesLoaded(List<ArchiveImage> images);
 
     }
 }

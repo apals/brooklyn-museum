@@ -14,25 +14,28 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import se.apals.brooklynmuseum.R;
-import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
+import se.apals.brooklynmuseum.models.ArchiveImage;
 
 /**
  * Created by apals on 05/09/16.
  */
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
 
+    private static final String TAG = ImagesAdapter.class.getSimpleName();
     private final Context mContext;
-    private List<BrooklynMuseumImage> mDataSet;
+    private List<ArchiveImage> mDataSet = new ArrayList<>();
 
     public ImagesAdapter(Context context) {
         mContext = context;
     }
 
-    public void setDataSet(List<BrooklynMuseumImage> dataSet) {
-        mDataSet = dataSet;
+    public void setDataSet(List<ArchiveImage> dataSet) {
+        mDataSet.clear();
+        mDataSet.addAll(dataSet);
         notifyDataSetChanged();
     }
 
@@ -43,21 +46,25 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        BrooklynMuseumImage image = mDataSet.get(position);
+        ArchiveImage image = mDataSet.get(position);
         holder.title.setText(image.getTitle());
-        Glide.with(mContext).load("http://i.imgur.com/mQfbH5O.png").error(R.drawable.ic_accessibility_black_24dp).listener(new RequestListener<String, GlideDrawable>() {
-            @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                Log.d("TAG", "Resource failed to load with reason: " + e.getMessage());
-                return false;
-            }
+        Log.d(TAG, "Loading image with url: " + image.getStandard_size_url());
+        Glide.with(mContext)
+                .load("https://" + image.getStandard_size_url())
+                .error(R.drawable.ic_accessibility_black_24dp)
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        Log.e(TAG, "Resource failed to load", e);
+                        return false;
+                    }
 
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                Log.d("TAG", "Resource is now ready");
-                return false;
-            }
-        })
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        Log.d(TAG, "Resource is now ready");
+                        return false;
+                    }
+                })
                 .into(holder.imageView);
     }
 

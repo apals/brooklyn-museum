@@ -1,7 +1,6 @@
 package se.apals.brooklynmuseum.data.api;
 
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.support.annotation.StringDef;
 import android.util.Log;
 
@@ -16,7 +15,7 @@ import java.net.URL;
 
 import io.realm.RealmObject;
 import se.apals.brooklynmuseum.data.DataSource;
-import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
+import se.apals.brooklynmuseum.models.ArchiveImage;
 
 /**
  * Created by apals on 04/09/16.
@@ -24,8 +23,8 @@ import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
 
 public final class BrooklynMuseumApi {
 
-    public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/archive/image/";
-    public static final String OBJECT = "archive/image/";
+    public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/archive/image?limit=10";
+    public static final String OBJECT = "archive/image?limit=1";
     private static final String TAG = BrooklynMuseumApi.class.getSimpleName();
 
     private static BrooklynMuseumApi sInstance;
@@ -38,7 +37,7 @@ public final class BrooklynMuseumApi {
     }
 
     public JSONObject fetchObjects(DataSource dataSource, SharedPreferences preferences) {
-        return fetch(dataSource, OBJECT, preferences, BrooklynMuseumImage.class);
+        return fetch(dataSource, OBJECT, preferences, ArchiveImage.class);
     }
 
     private JSONObject fetch(DataSource dataSource, @ApiCalls String endPoint, SharedPreferences prefs, Class<? extends RealmObject> clazz) {
@@ -52,6 +51,7 @@ public final class BrooklynMuseumApi {
 
     /**
      * Build the entire request URL for a specific @ApiCall
+     *
      * @param path path to the api
      * @return The request URl object
      */
@@ -70,7 +70,8 @@ public final class BrooklynMuseumApi {
         if (json == null) return;
 
         if (endpoint.equals(OBJECT)) {
-            dataSource.insertFromJSONSync(json.get("data").toString(), endpoint, clazz);
+            JSONArray data = new JSONArray(json.get("data").toString());
+            dataSource.insertFromJSONSync(data, endpoint, clazz);
         }
     }
 

@@ -11,13 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
 import se.apals.brooklynmuseum.R;
 import se.apals.brooklynmuseum.databinding.FragmentImagesBinding;
-import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
+import se.apals.brooklynmuseum.models.ArchiveImage;
 
 /**
  * Created by apals on 04/09/16.
@@ -55,13 +54,9 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
     }
 
     @Override
-    public void setImages(List<BrooklynMuseumImage> images) {
+    public void setImages(List<ArchiveImage> images) {
         Log.d(TAG, "Setting images: " + images.size());
         adapter.setDataSet(images);
-        for (BrooklynMuseumImage img : images) {
-            Log.d(TAG, ": " + img.getPrimaryImage());
-        }
-
     }
 
     @Override

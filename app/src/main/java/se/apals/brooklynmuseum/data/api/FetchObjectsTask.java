@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.apals.brooklynmuseum.data.DataSource;
-import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
+import se.apals.brooklynmuseum.models.ArchiveImage;
 
 
 /**
@@ -32,7 +32,7 @@ public class FetchObjectsTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         JSONObject json = BrooklynMuseumApi.getInstance().fetchObjects(dataSource, preferences);
         try {
-            BrooklynMuseumApi.getInstance().persistProperty(dataSource, json, BrooklynMuseumImage.class, BrooklynMuseumApi.OBJECT);
+            BrooklynMuseumApi.getInstance().persistProperty(dataSource, json, ArchiveImage.class, BrooklynMuseumApi.OBJECT);
         } catch (JSONException e) {
             Log.e(TAG, "Failed to insert objects to database");
         }

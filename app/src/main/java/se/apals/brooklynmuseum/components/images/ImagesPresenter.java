@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import se.apals.brooklynmuseum.data.DataManager;
 import se.apals.brooklynmuseum.data.DataSource;
 import se.apals.brooklynmuseum.data.api.FetchObjectsTask;
-import se.apals.brooklynmuseum.models.BrooklynMuseumImage;
+import se.apals.brooklynmuseum.models.ArchiveImage;
 
 /**
  * Created by apals on 04/09/16.
@@ -49,8 +49,12 @@ public class ImagesPresenter implements ImagesContract.Presenter {
     }
 
     @Override
-    public void onImagesLoaded(List<BrooklynMuseumImage> images) {
+    public void onImagesLoaded(List<ArchiveImage> images) {
         Log.d(TAG, "Images loaded..");
+        for (ArchiveImage a : images) {
+            Log.d(TAG, "" + a.getStandard_size_url());
+        }
+
         imageView.setImages(images);
     }
 
@@ -59,3 +63,4 @@ public class ImagesPresenter implements ImagesContract.Presenter {
         imageView.setPresenter(this);
     }
 }
+    

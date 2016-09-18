@@ -30,8 +30,8 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
     private ImagesAdapter adapter;
     private ImageClickListener mOnImageClickListener = new ImageClickListener() {
         @Override
-        public void onImageClick(ArchiveImage image) {
-            presenter.onImageClicked(image);
+        public void onImageClick(View transitionView, ArchiveImage image) {
+            presenter.onImageClicked(transitionView, image);
         }
     };
 
@@ -40,6 +40,7 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new ImagesAdapter(getContext(), mOnImageClickListener);
+        presenter.start();
     }
 
     @Nullable
@@ -58,7 +59,6 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.start();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
     }
 
     @Override
-    public void showImageDetailView(ArchiveImage image) {
-        ImageDetailActivity.start(getContext());
+    public void showImageDetailView(View transitionView, ArchiveImage image) {
+        ImageDetailActivity.start(transitionView, getContext(), image);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ImagesFragment extends Fragment implements ImagesContract.View {
 
     interface ImageClickListener {
 
-        void onImageClick(ArchiveImage image);
+        void onImageClick(View transitionView, ArchiveImage image);
 
     }
 }

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 
 import java.util.List;
 
@@ -60,8 +61,8 @@ public class ImagesPresenter implements ImagesContract.Presenter {
     }
 
     @Override
-    public void onImageClicked(ArchiveImage image) {
-        imageView.showImageDetailView(image);
+    public void onImageClicked(View transitionView, ArchiveImage image) {
+        imageView.showImageDetailView(transitionView, image);
     }
 
     @Inject

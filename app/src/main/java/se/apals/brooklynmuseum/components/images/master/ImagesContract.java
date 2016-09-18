@@ -14,7 +14,7 @@ public class ImagesContract {
     public interface View extends BaseView<Presenter> {
 
         void setImages(List<ArchiveImage> images);
-        void showImageDetailView(ArchiveImage image);
+        void showImageDetailView(android.view.View transitionView, ArchiveImage image);
 
     }
 
@@ -23,7 +23,7 @@ public class ImagesContract {
         void start();
         void loadImages();
         void onImagesLoaded(List<ArchiveImage> images);
-        void onImageClicked(ArchiveImage image);
+        void onImageClicked(android.view.View transitionView, ArchiveImage image);
 
     }
 }

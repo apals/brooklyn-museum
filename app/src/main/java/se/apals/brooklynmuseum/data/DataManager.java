@@ -62,10 +62,6 @@ public class DataManager implements DataSource {
             realmAsync.cancelTransaction();
         }
 
-        RealmResults<ArchiveImage> r = realmAsync.where(ArchiveImage.class).findAll();
-        for (ArchiveImage i : r) {
-            Log.d("SUPERTAG", " " + i.getLargestDerivativeUrl());
-        }
         realmAsync.close();
 
 

@@ -1,9 +1,11 @@
 package se.apals.brooklynmuseum.models;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class ArchiveImage extends RealmObject {
+public class ArchiveImage extends RealmObject implements Serializable {
 
     @PrimaryKey
     private int id;

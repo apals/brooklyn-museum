@@ -10,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,26 +48,15 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ArchiveImage image = mDataSet.get(position);
         holder.rootView.setOnClickListener(view -> {
-            mImageClickListener.onImageClick(image);
+            mImageClickListener.onImageClick(holder.rootView, image);
         });
         holder.title.setText(image.getTitle());
         Log.d(TAG, "Loading image with url: " + image.getStandard_size_url());
         Glide.with(mContext)
                 .load("https://" + image.getStandard_size_url())
-                .error(R.drawable.ic_accessibility_black_24dp)
-                .listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        Log.e(TAG, "Resource failed to load", e);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        Log.d(TAG, "Resource is now ready");
-                        return false;
-                    }
-                })
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .centerCrop()
+                .crossFade()
                 .into(holder.imageView);
     }
 

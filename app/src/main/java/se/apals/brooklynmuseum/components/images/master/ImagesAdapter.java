@@ -1,4 +1,4 @@
-package se.apals.brooklynmuseum.components.images;
+package se.apals.brooklynmuseum.components.images.master;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

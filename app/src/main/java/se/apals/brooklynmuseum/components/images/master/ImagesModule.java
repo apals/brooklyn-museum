@@ -1,7 +1,8 @@
-package se.apals.brooklynmuseum.components.images;
+package se.apals.brooklynmuseum.components.images.master;
 
 import dagger.Module;
 import dagger.Provides;
+import se.apals.brooklynmuseum.components.images.master.ImagesContract;
 
 /**
  * Created by apals on 04/09/16.

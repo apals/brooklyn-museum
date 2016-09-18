@@ -1,4 +1,4 @@
-package se.apals.brooklynmuseum.components.images;
+package se.apals.brooklynmuseum.components.images.master;
 
 import dagger.Component;
 import se.apals.brooklynmuseum.MainActivity;

@@ -15,14 +15,14 @@ import se.apals.brooklynmuseum.models.ArchiveImage;
 /**
  * Created by jespersandstrom on 25/05/16.
  */
-public class FetchObjectsTask extends AsyncTask<Void, Void, Void> {
+public class FetchImagesTask extends AsyncTask<Void, Void, Void> {
 
-    private static String TAG = FetchObjectsTask.class.getSimpleName();
+    private static String TAG = FetchImagesTask.class.getSimpleName();
 
     private SharedPreferences preferences;
     private DataSource dataSource;
 
-    public FetchObjectsTask(SharedPreferences preferences, DataSource dataSource) {
+    public FetchImagesTask(SharedPreferences preferences, DataSource dataSource) {
         this.preferences = preferences;
         this.dataSource = dataSource;
     }
@@ -30,7 +30,7 @@ public class FetchObjectsTask extends AsyncTask<Void, Void, Void> {
     @SuppressLint("CommitPrefEdits")
     @Override
     protected Void doInBackground(Void... params) {
-        JSONObject json = BrooklynMuseumApi.getInstance().fetchObjects(dataSource, preferences);
+        JSONObject json = BrooklynMuseumApi.getInstance().fetchImages(dataSource, preferences);
         try {
             BrooklynMuseumApi.getInstance().persistProperty(dataSource, json, ArchiveImage.class, BrooklynMuseumApi.OBJECT);
         } catch (JSONException e) {

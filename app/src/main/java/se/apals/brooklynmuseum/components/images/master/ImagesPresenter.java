@@ -1,4 +1,4 @@
-package se.apals.brooklynmuseum.components.images;
+package se.apals.brooklynmuseum.components.images.master;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import se.apals.brooklynmuseum.data.DataManager;
 import se.apals.brooklynmuseum.data.DataSource;
-import se.apals.brooklynmuseum.data.api.FetchObjectsTask;
+import se.apals.brooklynmuseum.data.api.FetchImagesTask;
 import se.apals.brooklynmuseum.models.ArchiveImage;
 
 /**
@@ -36,7 +36,7 @@ public class ImagesPresenter implements ImagesContract.Presenter {
     @Override
     public void start() {
         loadImages();
-        new FetchObjectsTask(
+        new FetchImagesTask(
                 preferences,
                 dataSource)
                 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -63,4 +63,3 @@ public class ImagesPresenter implements ImagesContract.Presenter {
         imageView.setPresenter(this);
     }
 }
-    

@@ -23,9 +23,9 @@ import se.apals.brooklynmuseum.models.ArchiveImage;
 
 public final class BrooklynMuseumApi {
 
+    private static final String TAG = BrooklynMuseumApi.class.getSimpleName();
     public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/archive/image?limit=10";
     public static final String OBJECT = "archive/image?limit=1";
-    private static final String TAG = BrooklynMuseumApi.class.getSimpleName();
 
     private static BrooklynMuseumApi sInstance;
 
@@ -36,7 +36,7 @@ public final class BrooklynMuseumApi {
         return sInstance;
     }
 
-    public JSONObject fetchObjects(DataSource dataSource, SharedPreferences preferences) {
+    public JSONObject fetchImages(DataSource dataSource, SharedPreferences preferences) {
         return fetch(dataSource, OBJECT, preferences, ArchiveImage.class);
     }
 

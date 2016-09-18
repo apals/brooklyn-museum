@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import se.apals.brooklynmuseum.components.images.DaggerImagesComponent;
-import se.apals.brooklynmuseum.components.images.ImagesFragment;
-import se.apals.brooklynmuseum.components.images.ImagesModule;
-import se.apals.brooklynmuseum.components.images.ImagesPresenter;
+import se.apals.brooklynmuseum.components.images.master.ImagesFragment;
+import se.apals.brooklynmuseum.components.images.master.ImagesModule;
+import se.apals.brooklynmuseum.components.images.master.ImagesPresenter;
 import se.apals.brooklynmuseum.data.DataManagerComponent;
 
 public class MainActivity extends AppCompatActivity {

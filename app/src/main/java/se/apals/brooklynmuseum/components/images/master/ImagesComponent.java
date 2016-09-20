@@ -1,6 +1,7 @@
 package se.apals.brooklynmuseum.components.images.master;
 
 import dagger.Component;
+import se.apals.brooklynmuseum.ApplicationModule;
 import se.apals.brooklynmuseum.MainActivity;
 import se.apals.brooklynmuseum.data.DataManagerComponent;
 import se.apals.brooklynmuseum.utils.FragmentScoped;

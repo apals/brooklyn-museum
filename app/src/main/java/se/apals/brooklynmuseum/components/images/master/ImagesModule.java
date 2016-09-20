@@ -1,5 +1,7 @@
 package se.apals.brooklynmuseum.components.images.master;
 
+import android.app.Application;
+
 import dagger.Module;
 import dagger.Provides;
 import se.apals.brooklynmuseum.components.images.master.ImagesContract;
@@ -11,9 +13,16 @@ import se.apals.brooklynmuseum.components.images.master.ImagesContract;
 public class ImagesModule {
 
     private final ImagesContract.View view;
+    private final Application application;
 
-    public ImagesModule(ImagesContract.View view) {
+    public ImagesModule(ImagesContract.View view, Application app) {
         this.view = view;
+        this.application = app;
+    }
+
+    @Provides
+    public Application providesApplication() {
+        return application;
     }
 
     @Provides

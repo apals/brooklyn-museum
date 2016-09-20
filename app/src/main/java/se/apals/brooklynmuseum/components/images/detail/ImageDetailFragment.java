@@ -23,11 +23,6 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     private FragmentImageDetailBinding binding;
     private String mImageUrl;
 
-
-    public ImageDetailFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +35,22 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_image_detail, container, false);
+
+        //Load image
         Glide.with(this)
                 .load(mImageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .dontAnimate()
                 .centerCrop()
-                .into(binding.imageDetailImageview);
+                .into(new ImageViewTarget<GlideDrawable>(binding.imageDetailImageview) {
+                          @Override
+                          protected void setResource(GlideDrawable resource) {
+                              binding.imageDetailImageview.setImageDrawable(resource);
+                              getActivity().supportStartPostponedEnterTransition();
+                          }
+                      }
+                );
+
         return binding.getRoot();
     }
 

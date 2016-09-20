@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         DataManagerComponent dataManagerComponent = ((BrooklynMuseumApplication) getApplication()).getDataManagerComponent();
 
         DaggerImagesComponent.builder()
-                .imagesModule(new ImagesModule(fragment))
+                .imagesModule(new ImagesModule(fragment, getApplication()))
                 .dataManagerComponent(dataManagerComponent)
                 .build().inject(this);
 

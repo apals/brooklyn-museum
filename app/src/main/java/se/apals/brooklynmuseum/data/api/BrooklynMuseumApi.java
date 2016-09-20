@@ -26,22 +26,19 @@ public final class BrooklynMuseumApi {
 
     private static final String TAG = BrooklynMuseumApi.class.getSimpleName();
     public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/";
-    public static final String IMAGES = "archive/image?limit=10";
+    public static final String IMAGES = "archive/image?limit=30";
 
-    private static BrooklynMuseumApi sInstance;
+    private final SharedPreferences prefs;
 
-    public static BrooklynMuseumApi getInstance() {
-        if (sInstance == null) {
-            sInstance = new BrooklynMuseumApi();
-        }
-        return sInstance;
+    public BrooklynMuseumApi(SharedPreferences prefs) {
+        this.prefs = prefs;
     }
 
-    public JSONObject fetchImages(SharedPreferences preferences) {
-        return fetch(IMAGES, preferences);
+    public JSONObject fetchImages() {
+        return fetch(IMAGES);
     }
 
-    private JSONObject fetch(@ApiCalls String endPoint, SharedPreferences prefs) {
+    private JSONObject fetch(@ApiCalls String endPoint) {
         String response = HTTPUtils.get(getUrl(endPoint), prefs, endPoint);
         try {
             return new JSONObject(response);
@@ -65,15 +62,6 @@ public final class BrooklynMuseumApi {
         }
 
         return url;
-    }
-
-    public void persistProperty(DataSource dataSource, JSONObject json, final Class<? extends RealmObject> clazz, @ApiCalls String endpoint) throws JSONException {
-        if (json == null) return;
-
-        if (endpoint.equals(IMAGES)) {
-            JSONArray data = new JSONArray(json.get("data").toString());
-            dataSource.insertFromJSONSync(data, endpoint, clazz);
-        }
     }
 
     @StringDef({IMAGES})

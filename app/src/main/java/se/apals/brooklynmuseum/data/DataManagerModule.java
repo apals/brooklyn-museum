@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
+import se.apals.brooklynmuseum.data.api.BrooklynMuseumApi;
 
 /**
  * Created by apals on 04/09/16.
@@ -20,6 +21,12 @@ public class DataManagerModule {
     @Provides
     DataManager providesDataManager(Realm realm) {
         return new DataManager(realm);
+    }
+
+    @Singleton
+    @Provides
+    BrooklynMuseumApi providesBrooklynMuseumApi(SharedPreferences prefs) {
+        return new BrooklynMuseumApi(prefs);
     }
 
     @Provides

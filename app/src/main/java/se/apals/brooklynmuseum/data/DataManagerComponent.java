@@ -1,11 +1,10 @@
 package se.apals.brooklynmuseum.data;
 
-import android.content.SharedPreferences;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
 import se.apals.brooklynmuseum.ApplicationModule;
+import se.apals.brooklynmuseum.data.api.FetchImagesTask;
 
 /**
  * Created by apals on 04/09/16.
@@ -15,6 +14,8 @@ import se.apals.brooklynmuseum.ApplicationModule;
 public interface DataManagerComponent {
 
     DataManager getDataManager();
-    SharedPreferences getSharedPreferences();
+
+    // FetchImagesTask does not belong to anything downstream, so inject here
+    void inject(FetchImagesTask task);
 
 }

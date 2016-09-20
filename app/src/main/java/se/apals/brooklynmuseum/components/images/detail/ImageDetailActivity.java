@@ -44,6 +44,7 @@ public class ImageDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportPostponeEnterTransition();
         setContentView(R.layout.activity_image_detail);
 
         ImageDetailFragment f = (ImageDetailFragment) getSupportFragmentManager().findFragmentById(R.id.image_detail_fragment);

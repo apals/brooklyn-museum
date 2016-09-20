@@ -338,7 +338,7 @@ public class ArchiveImage extends RealmObject implements Serializable {
      * @return The standard_size_url
      */
     public String getStandard_size_url() {
-        return standard_size_url;
+        return "https://" + standard_size_url;
     }
 
     /**

@@ -52,11 +52,7 @@ public class ImagesPresenter implements ImagesContract.Presenter {
 
     @Override
     public void onImagesLoaded(List<ArchiveImage> images) {
-        Log.d(TAG, "Images loaded..");
-        for (ArchiveImage a : images) {
-            Log.d(TAG, "" + a.getStandard_size_url());
-        }
-
+        Log.d(TAG, "Images loaded");
         imageView.setImages(images);
     }
 

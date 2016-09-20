@@ -1,6 +1,7 @@
 package se.apals.brooklynmuseum.data.api;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.annotation.StringDef;
 import android.util.Log;
 
@@ -24,8 +25,8 @@ import se.apals.brooklynmuseum.models.ArchiveImage;
 public final class BrooklynMuseumApi {
 
     private static final String TAG = BrooklynMuseumApi.class.getSimpleName();
-    public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/archive/image?limit=10";
-    public static final String OBJECT = "archive/image?limit=1";
+    public static final String BASE_PATH = "https://www.brooklynmuseum.org/api/v2/";
+    public static final String IMAGES = "archive/image?limit=10";
 
     private static BrooklynMuseumApi sInstance;
 
@@ -36,11 +37,11 @@ public final class BrooklynMuseumApi {
         return sInstance;
     }
 
-    public JSONObject fetchImages(DataSource dataSource, SharedPreferences preferences) {
-        return fetch(dataSource, OBJECT, preferences, ArchiveImage.class);
+    public JSONObject fetchImages(SharedPreferences preferences) {
+        return fetch(IMAGES, preferences);
     }
 
-    private JSONObject fetch(DataSource dataSource, @ApiCalls String endPoint, SharedPreferences prefs, Class<? extends RealmObject> clazz) {
+    private JSONObject fetch(@ApiCalls String endPoint, SharedPreferences prefs) {
         String response = HTTPUtils.get(getUrl(endPoint), prefs, endPoint);
         try {
             return new JSONObject(response);
@@ -58,7 +59,7 @@ public final class BrooklynMuseumApi {
     private static URL getUrl(@ApiCalls String path) {
         URL url = null;
         try {
-            url = new URL(BASE_PATH);
+            url = new URL((Uri.parse(BASE_PATH + path).toString()));
         } catch (MalformedURLException e) {
             Log.e(TAG, "getUrl: ", e);
         }
@@ -69,13 +70,13 @@ public final class BrooklynMuseumApi {
     public void persistProperty(DataSource dataSource, JSONObject json, final Class<? extends RealmObject> clazz, @ApiCalls String endpoint) throws JSONException {
         if (json == null) return;
 
-        if (endpoint.equals(OBJECT)) {
+        if (endpoint.equals(IMAGES)) {
             JSONArray data = new JSONArray(json.get("data").toString());
             dataSource.insertFromJSONSync(data, endpoint, clazz);
         }
     }
 
-    @StringDef({OBJECT})
+    @StringDef({IMAGES})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ApiCalls {
     }

@@ -32,7 +32,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getActivity().getIntent().getExtras();
-        mImageUrl = "https://" + extras.getString(ImageDetailActivity.KEY_IMAGE);
+        mImageUrl = extras.getString(ImageDetailActivity.KEY_IMAGE);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class FetchImagesTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         JSONObject json = BrooklynMuseumApi.getInstance().fetchImages(dataSource, preferences);
         try {
-            BrooklynMuseumApi.getInstance().persistProperty(dataSource, json, ArchiveImage.class, BrooklynMuseumApi.OBJECT);
+            BrooklynMuseumApi.getInstance().persistProperty(dataSource, json, ArchiveImage.class, BrooklynMuseumApi.IMAGES);
         } catch (JSONException e) {
             Log.e(TAG, "Failed to insert objects to database");
         }

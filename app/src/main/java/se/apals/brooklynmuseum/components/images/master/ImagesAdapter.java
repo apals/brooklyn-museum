@@ -51,9 +51,8 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
             mImageClickListener.onImageClick(holder.rootView, image);
         });
         holder.title.setText(image.getTitle());
-        Log.d(TAG, "Loading image with url: " + image.getStandard_size_url());
         Glide.with(mContext)
-                .load("https://" + image.getStandard_size_url())
+                .load(image.getStandard_size_url())
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
                 .crossFade()

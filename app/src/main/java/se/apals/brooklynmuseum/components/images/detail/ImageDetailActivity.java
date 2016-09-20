@@ -36,6 +36,8 @@ public class ImageDetailActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             context.startActivity(i, options.toBundle());
+        } else {
+            context.startActivity(i);
         }
     }
 

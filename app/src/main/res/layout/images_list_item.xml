@@ -8,7 +8,8 @@
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/brooklyn_museum_image" />
+        android:contentDescription="@string/brooklyn_museum_image"
+        android:transitionName="@string/image_detail_transition_name"/>
 
     <TextView
         android:id="@+id/title"
